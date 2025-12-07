@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 
@@ -28,7 +27,6 @@ const formSchema = z.object({
 type SignInFormType = z.output<typeof formSchema>;
 
 const SignInView = () => {
-  const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const form = useForm<SignInFormType>({
@@ -46,11 +44,11 @@ const SignInView = () => {
       {
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
           setPending(false);
-          router.push("/");
         },
       },
       {
@@ -58,6 +56,28 @@ const SignInView = () => {
           setError(error.message);
         },
       },
+    );
+  };
+
+  const  onSocial = async (provider: "github" | "google") => {
+    setError(null);
+    setPending(true);
+    authClient.signIn.social(
+        {
+          provider: provider,
+          callbackURL: "/", // equal to make router.push in onSuccess
+        },
+        {
+          onSuccess: () => {
+            setPending(false);
+            // router.push("/");
+          },
+        },
+        {
+          onError: ({ error }) => {
+            setError(error.message);
+          },
+        },
     );
   };
 
@@ -130,6 +150,7 @@ const SignInView = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <Button
                     disabled={pending}
+                    onClick={() => onSocial("google")}
                     variant="outline"
                     type="button"
                     className="w-full"
@@ -138,6 +159,7 @@ const SignInView = () => {
                   </Button>
                   <Button
                     disabled={pending}
+                    onClick={() => onSocial("github")}
                     variant="outline"
                     type="button"
                     className="w-full"
