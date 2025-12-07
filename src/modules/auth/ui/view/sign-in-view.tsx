@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { OctagonAlertIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import {FaGoogle, FaGithub} from "react-icons/fa";
 import {
   Form,
   FormControl,
@@ -18,6 +19,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -29,6 +31,7 @@ type SignInFormType = z.output<typeof formSchema>;
 const SignInView = () => {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
   const form = useForm<SignInFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,6 +52,7 @@ const SignInView = () => {
       {
         onSuccess: () => {
           setPending(false);
+          router.push('/')
         },
       },
       {
@@ -155,7 +159,7 @@ const SignInView = () => {
                     type="button"
                     className="w-full"
                   >
-                    Google
+                    <FaGoogle/>
                   </Button>
                   <Button
                     disabled={pending}
@@ -164,7 +168,7 @@ const SignInView = () => {
                     type="button"
                     className="w-full"
                   >
-                    Github
+                    <FaGithub/>
                   </Button>
                 </div>
                 <div className="text-center text-sm">
