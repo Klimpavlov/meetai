@@ -4,6 +4,7 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { LoadingState } from "@/components/loading-state";
 import { ErrorState } from "@/components/error-state";
+import {ResponsiveDialog} from "@/components/responsive-dialog";
 
 export const AgentsView = () => {
   const trpc = useTRPC();
@@ -27,7 +28,11 @@ export const AgentsView = () => {
       />
     );
   }
-  return <div>{JSON.stringify(data, null, 2)}</div>;
+  return (
+      <div>
+        {JSON.stringify(data, null, 2)}
+      </div>
+  )
 };
 
 export const AgentsViewLoading = () => {
