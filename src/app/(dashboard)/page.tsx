@@ -1,17 +1,17 @@
-import {HomeView} from "@/modules/home/ui/view/home-view";
-import {auth} from "@/lib/auth";
-import {headers} from "next/headers";
-import {redirect} from "next/navigation";
-import {caller} from "@/trpc/server";
+import { HomeView } from "@/modules/home/ui/view/home-view";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { caller } from "@/trpc/server";
 
 export default async function Page() {
   const session = await auth.api.getSession({
-    headers: await headers()
-  })
+    headers: await headers(),
+  });
 
-  if(!session) {
-    redirect("/sign-in")
+  if (!session) {
+    redirect("/sign-in");
   }
 
-  return <HomeView/>
+  return <HomeView />;
 }

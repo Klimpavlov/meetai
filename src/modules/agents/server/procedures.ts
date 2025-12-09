@@ -1,10 +1,10 @@
-import {baseProcedure, createTRPCRouter} from "@/trpc/init";
-import {db} from "@/db";
-import {agents} from "@/db/schema";
+import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+import { db } from "@/db";
+import { agents } from "@/db/schema";
 
 export const agentsRouter = createTRPCRouter({
-    getMany: baseProcedure.query(async () => {
-        const data = await db.select().from(agents)
-        return data
-    })
-})
+  getMany: baseProcedure.query(async () => {
+    const data = await db.select().from(agents);
+    return data;
+  }),
+});

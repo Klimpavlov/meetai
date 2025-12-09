@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { OctagonAlertIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import {FaGoogle, FaGithub} from "react-icons/fa";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 import {
   Form,
   FormControl,
@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -61,7 +61,7 @@ const SignUpView = () => {
       {
         onSuccess: () => {
           setPending(false);
-            router.push("/");
+          router.push("/");
         },
       },
       {
@@ -72,27 +72,27 @@ const SignUpView = () => {
     );
   };
 
-    const onSocial = async (provider: "github" | "google") => {
-        setError(null);
-        setPending(true);
-        authClient.signIn.social(
-            {
-                provider: provider,
-                callbackURL: "/",  // equal to make router.push in onSuccess
-            },
-            {
-                onSuccess: () => {
-                    setPending(false);
-                    // router.push("/");
-                },
-            },
-            {
-                onError: ({ error }) => {
-                    setError(error.message);
-                },
-            },
-        );
-    };
+  const onSocial = async (provider: "github" | "google") => {
+    setError(null);
+    setPending(true);
+    authClient.signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/", // equal to make router.push in onSuccess
+      },
+      {
+        onSuccess: () => {
+          setPending(false);
+          // router.push("/");
+        },
+      },
+      {
+        onError: ({ error }) => {
+          setError(error.message);
+        },
+      },
+    );
+  };
   return (
     <div className="flex flex-col gap-6">
       <Card className="overflow-hidden p-0">
@@ -197,7 +197,7 @@ const SignUpView = () => {
                     type="button"
                     className="w-full"
                   >
-                    <FaGoogle/>
+                    <FaGoogle />
                   </Button>
                   <Button
                     disabled={pending}
@@ -206,7 +206,7 @@ const SignUpView = () => {
                     type="button"
                     className="w-full"
                   >
-                    <FaGithub/>
+                    <FaGithub />
                   </Button>
                 </div>
                 <div className="text-center text-sm">
